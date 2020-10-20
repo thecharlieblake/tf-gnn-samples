@@ -11,7 +11,8 @@ def sparse_ggnn_layer(node_embeddings: tf.Tensor,
                       num_timesteps: int = 1,
                       gated_unit_type: str = "gru",
                       activation_function: str = "tanh",
-                      message_aggregation_function: str = "sum"
+                      message_aggregation_function: str = "sum",
+                      train_edges: bool = True,
                       ) -> tf.Tensor:
     """
     Compute new graph states by neural message passing and gated units on the nodes.
@@ -57,11 +58,14 @@ def sparse_ggnn_layer(node_embeddings: tf.Tensor,
     edge_type_to_message_transformation_layers = []  # Layers to compute the message from a source state
     edge_type_to_message_targets = []  # List of tensors of message targets
     for edge_type_idx, adjacency_list_for_edge_type in enumerate(adjacency_lists):
+        if not train_edges:
+            print(f'edge type {edge_type_idx} frozen for GGNN')
         edge_type_to_message_transformation_layers.append(
             tf.keras.layers.Dense(units=state_dim,
                                   use_bias=False,
                                   activation=None,
-                                  name="Edge_%i_Weight" % edge_type_idx))
+                                  name="Edge_%i_Weight" % edge_type_idx,
+                                  trainable=train_edges))
         edge_type_to_message_targets.append(adjacency_list_for_edge_type[:, 1])
 
     # Let M be the number of messages (sum of all E):

@@ -42,6 +42,8 @@ class Sparse_Graph_Model(ABC):
             'momentum': 0.85,
             'clamp_gradient_norm': 1.0,
             'random_seed': 0,
+
+            'train_edges': True,
         }
 
     @staticmethod

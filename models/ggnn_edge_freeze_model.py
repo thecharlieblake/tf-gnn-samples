@@ -7,7 +7,7 @@ from tasks import Sparse_Graph_Task
 from gnns import sparse_ggnn_layer
 
 
-class GGNN_Model(Sparse_Graph_Model):
+class GGNN_Edge_Freeze_Model(Sparse_Graph_Model):
     @classmethod
     def default_params(cls):
         params = super().default_params()
@@ -19,12 +19,14 @@ class GGNN_Model(Sparse_Graph_Model):
             'graph_layer_input_dropout_keep_prob': 1.0,
             'graph_dense_between_every_num_gnn_layers': 10000,
             'graph_residual_connection_every_num_layers': 10000,
+
+            'train_edges': False,
         })
         return params
 
     @staticmethod
     def name(params: Dict[str, Any]) -> str:
-        return "GGNN"
+        return "GGNN_Edge_Freeze"
 
     def __init__(self, params: Dict[str, Any], task: Sparse_Graph_Task, run_id: str, result_dir: str) -> None:
         super().__init__(params, task, run_id, result_dir)

@@ -4,7 +4,7 @@ from typing import Tuple, Type, Dict, Any
 
 import pickle
 
-from models import (Sparse_Graph_Model, GGNN_Model, GNN_FiLM_Model, GNN_Edge_MLP_Model,
+from models import (Sparse_Graph_Model, GGNN_Model, GGNN_Edge_Freeze_Model, GNN_FiLM_Model, GNN_Edge_MLP_Model,
                     RGAT_Model, RGCN_Model, RGDCN_Model, RGIN_Model)
 from tasks import Sparse_Graph_Task, QM9_Task, Citation_Network_Task, PPI_Task, VarMisuse_Task
 
@@ -33,6 +33,8 @@ def name_to_model_class(name: str) -> Tuple[Type[Sparse_Graph_Model], Dict[str, 
     name = name.lower()
     if name in ["ggnn", "ggnn_model"]:
         return GGNN_Model, {}
+    if name in ["ggnn_f", "ggnn_model_f", "ggnn-f", "ggnn-model-f"]:
+        return GGNN_Edge_Freeze_Model, {}
     if name in ["gnn_edge_mlp", "gnn-edge-mlp", "gnn_edge_mlp_model"]:
         return GNN_Edge_MLP_Model, {}
     if name in ["gnn_edge_mlp0", "gnn-edge-mlp0", "gnn_edge_mlp0_model"]:
