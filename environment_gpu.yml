@@ -1,0 +1,13 @@
+name: tf-gnn-samples
+channels:
+- anaconda
+- defaults
+dependencies:
+- docopt
+- numpy
+- python==3.7
+- pip:
+    - azure-storage==0.36.0
+    - dpu-utils==0.1.30
+    - tensorflow-gpu==1.13.1
+
